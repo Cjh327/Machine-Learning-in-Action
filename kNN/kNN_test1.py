@@ -1,33 +1,17 @@
 # -*- coding: utf-8 -*-
 """
-Created on Fri Sep 28 20:13:47 2018
+Created on Fri Sep 28 15:45:40 2018
 
 @author: tf
 """
 
 import kNN
 
-'''
-# data reading
-datingDataMat, datingLabels = kNN.file2matrix('datingTestSet.txt')
-#print(datingDataMat)
-#print(datingLabels)
-print(datingDataMat.shape)
-print(len(datingLabels))
+def createDataSet():
+    group = array([[1,1.1],[1,1],[0,0],[0,0.1]])
+    labels = ['A', 'A', 'B', 'B']
+    return group, labels
 
-import matplotlib
-import matplotlib.pyplot as plt
-
-# data plotting
-fig = plt.figure()
-ax = fig.add_subplot(111)
-ax.scatter(datingDataMat[:, 1], datingDataMat[:, 2], 15*array(datingLabels), 15*array(datingLabels))
-
-# data normolization
-normMat, ranges, minVals = kNN.autoNorm(datingDataMat)
-print('normMat', normMat)
-print('ranges', ranges)
-print('minVals', minVals)
-'''
-
-kNN.datingClassTest()
+group, labels = createDataSet()
+res = kNN.classify0([1,1], group, labels, 3)
+print(res)
