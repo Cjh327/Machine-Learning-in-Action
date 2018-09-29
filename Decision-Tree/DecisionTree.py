@@ -27,17 +27,15 @@ def calcShannonEnt(dataSet):
     return shannonEnt
 
 
-def splitDataSet(dataSet, axis, value):
+def splitDataSet(dataSet, col, value):
     '''
-    split dataSet by value on axis
+    split dataSet by value on col
     '''
-    retDataSet = np.array([])
-    for featVec in dataSet:
-        if featVec[axis] == value:
-            reducedFeatVec = np.concatenate((featVec[:axis], featVec[axis+1:]),axis=0)
-            np.append(retDataSet, reducedFeatVec)
-    return retDataSet
-
+    m = dataSet.shape[0]
+    isDeleted = np.argwhere(dataSet[:, col] == value)
+    reducedMat = np.delete(dataSet, col, axis=1)
+    reducedMat = np.delete(reducedMat, np.reshape(isDeleted, isDeleted.size), axis=0)
+    return reducedMat
 
 def chooseBestFeatureToSplit(dataSet):
     '''
@@ -60,14 +58,43 @@ def chooseBestFeatureToSplit(dataSet):
             bestInfoGain = infoGain
             bestFeat = i
     return bestFeat
-        
+    
+    
+def majorityCnt(classList):
+    '''
+    sort class
+    '''
+    classCnt = {}
+    for vote in classList:
+        if vote not in classCnt.keys():
+            classCnt[vote] = 0
+        classCnt[vote] += 1
+    sortedClassCnt = sorted(classCnt.items(), key=operator.itemgetter(1), reversed=True)
+    return sortedClassCnt[0][0]
 
-    
-    
-    
-    
-    
-    
+def createDecisionTree(dataSet, labels):
+    '''
+    create decision tree
+    '''
+    classList = [example[-1] for example in dataSet]
+    # stop classifying when all the classes are same
+    print(dataSet)
+    print(classList)
+    if classList.count(classList[0]) == len(classList):
+        return classList[0]
+    if dataSet.shape[1] == 1:
+        return majorityCnt(classList)
+    bestFeat = chooseBestFeatureToSplit(dataSet)
+    bestFeatLabel = labels[bestFeat]
+    tree = {bestFeatLabel: {}}
+    np.delete(labels, bestFeat)
+    featVals = [example[bestFeat] for example in dataSet]
+    uniqueVals = set(featVals)
+    # for every value of bestFeat, build a branch of the tree
+    for val in uniqueVals:
+        subLabels = labels[:]
+        tree[bestFeatLabel][val] = createDecisionTree(splitDataSet(dataSet, bestFeat, val), subLabels)
+    return tree
     
     
     
