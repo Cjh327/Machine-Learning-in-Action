@@ -6,6 +6,8 @@ Created on Sat Sep 29 13:19:45 2018
 """
 
 from math import log
+import numpy as np
+import operator
 
 def calcShannonEnt(dataSet):
     '''
@@ -24,11 +26,62 @@ def calcShannonEnt(dataSet):
         shannonEnt -= prob * log(prob, 2)
     return shannonEnt
 
+
 def splitDataSet(dataSet, axis, value):
-    retDataSet = []
+    '''
+    split dataSet by value on axis
+    '''
+    retDataSet = np.array([])
     for featVec in dataSet:
         if featVec[axis] == value:
-            reducedFeatVec = featVec[:axis]
-            reducedFeatVec.extend(featVec[axis+1:])
-            retDataSet.append(reducedFeatVec)
+            reducedFeatVec = np.concatenate((featVec[:axis], featVec[axis+1:]),axis=0)
+            np.append(retDataSet, reducedFeatVec)
     return retDataSet
+
+
+def chooseBestFeatureToSplit(dataSet):
+    '''
+    choose best feature to split
+    '''
+    numFeat = dataSet.shape[1]
+    baseEntropy = calcShannonEnt(dataSet)
+    bestInfoGain = 0
+    bestFeat = -1
+    for i in range(numFeat):
+        featList = [example[i] for example in dataSet]
+        uniqueVals = set(featList)
+        newEntropy = 0
+        for val in uniqueVals:
+            subDataSet = splitDataSet(dataSet, i, val)
+            prob = subDataSet.shape[0] / dataSet.shape[0]
+            newEntropy += prob * calcShannonEnt(subDataSet)
+        infoGain = baseEntropy - newEntropy
+        if infoGain > bestInfoGain:
+            bestInfoGain = infoGain
+            bestFeat = i
+    return bestFeat
+        
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
