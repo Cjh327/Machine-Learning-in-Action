@@ -17,7 +17,18 @@ def createDataSet():
     labels = np.array([['no surfcing', 'flippers']])
     return dataSet, labels
 
-myDat, labels = createDataSet()
 
+myDat, labels = createDataSet()
 tree = DecisionTree.createDecisionTree(myDat, labels)
 print('tree', tree)
+print(DecisionTree.classify(tree, labels, [1,1]))
+DecisionTree.storeTree(tree, 'tree.txt')
+newtree = DecisionTree.grabTree('tree.txt')
+print(newtree)
+
+
+fr = open('lenses.txt')
+lenses = np.array([inst.strip().split('\t') for inst in fr.readlines()])
+lensesLabels = np.array([['age', 'prescript', 'astigmatic', 'tearRate']])
+lensesTree = DecisionTree.createDecisionTree(lenses, lensesLabels)
+print(lensesTree)
