@@ -15,11 +15,9 @@ def createDataSet():
                         [0, 1, 0],
                         [0, 1, 0]])
     labels = np.array([['no surfcing', 'flippers']])
-    print(labels.shape)
     return dataSet, labels
 
 myDat, labels = createDataSet()
-mat = DecisionTree.splitDataSet(myDat, 2, 1)
-print(mat)
+
 tree = DecisionTree.createDecisionTree(myDat, labels)
-print(tree)
+print('tree', tree)

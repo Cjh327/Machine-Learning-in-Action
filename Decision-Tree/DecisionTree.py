@@ -78,25 +78,26 @@ def createDecisionTree(dataSet, labels):
     '''
     classList = [example[-1] for example in dataSet]
     # stop classifying when all the classes are same
-    print(dataSet)
-    print(classList)
     if classList.count(classList[0]) == len(classList):
         return classList[0]
     if dataSet.shape[1] == 1:
         return majorityCnt(classList)
     bestFeat = chooseBestFeatureToSplit(dataSet)
-    bestFeatLabel = labels[bestFeat]
+    bestFeatLabel = labels[0, bestFeat]
     tree = {bestFeatLabel: {}}
-    np.delete(labels, bestFeat)
+    print('subtree', tree)
+    print('bestfeat', bestFeat)
+    labels =  np.delete(labels, bestFeat, axis=1)
+    print('labels', labels)
     featVals = [example[bestFeat] for example in dataSet]
     uniqueVals = set(featVals)
     # for every value of bestFeat, build a branch of the tree
     for val in uniqueVals:
         subLabels = labels[:]
-        tree[bestFeatLabel][val] = createDecisionTree(splitDataSet(dataSet, bestFeat, val), subLabels)
+        tree[bestFeatLabel, val] = createDecisionTree(splitDataSet(dataSet, bestFeat, val), subLabels)
     return tree
     
-    
+
     
     
     
