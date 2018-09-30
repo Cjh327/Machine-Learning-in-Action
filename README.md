@@ -11,4 +11,8 @@ python codes with numpy -- Machine Learning in Action
 
 #### 3.1 Tree construction
 
-#### 3.2 Plotting trees in Python with Matplotlib annotations 
+#### 3.2 Plotting trees in Python with Matplotlib annotations
+
+#### 3.3 Testing and storing the classifier
+
+#### 3.4 Example: using decision trees to predict contact lens type 
