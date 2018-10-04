@@ -7,9 +7,9 @@ Created on Sun Sep 30 21:52:45 2018
 
 from numpy import *
 
-def trainNB0(trainMatrix: ndarray, trainCategory: ndarray) -> [ndarray, ndarray, int]:
+def trainNB(trainMatrix: ndarray, trainCategory: ndarray) -> [ndarray, ndarray, float]:
     '''
-    a naive Bayes
+    train naive Bayes
     trainMatrix:    m*n
     trainCategory:  m*1
     '''
@@ -23,7 +23,25 @@ def trainNB0(trainMatrix: ndarray, trainCategory: ndarray) -> [ndarray, ndarray,
     p0Num = trainMatrix.sum(axis=0) - p1Num
     p1Denom = abusiveMat.sum()
     p0Denom = trainMatrix.sum() - p1Denom.sum()
-    p1Vec = p1Num / p1Denom
-    p0Vec = p0Num / p0Denom
-    return p1Vec, p0Vec, pAbusive
+    p1Vec = log((p1Num+1) / (p1Denom+2))
+    p0Vec = log((p0Num+1) / (p0Denom+2))
+    return p0Vec, p1Vec, pAbusive
 
+def classifyNB(vec: ndarray, p0Vec: ndarray, p1Vec: ndarray, pClass1: float) -> int:
+    '''
+    classify with naive Bayes
+    vec:    1*n
+    p0Vec:  1*n
+    p1Vec:  1*n
+    '''
+    vec = vec.reshape((1, vec.size))
+    p0Vec = p0Vec.reshape((1, p0Vec.size))
+    p1Vec = p1Vec.reshape((1, p1Vec.size))
+    p1 = dot(vec, p1Vec.T) + log(pClass1);    # log[p(w|c1)p(c1)] = log(p(w|c1)) + log(p(c1))
+    print('p1',p1)
+    p0 = dot(vec, p0Vec.T) + log(1 - pClass1);
+    print('p0',p0)
+    if p1 > p0:
+        return 1
+    else:
+        return 0

@@ -4,7 +4,7 @@ Created on Sun Sep 30 21:54:05 2018
 
 @author: tf
 """
-
+ 
 import Bayes
 import numpy as np
 
@@ -41,7 +41,7 @@ def words2Mat(vocabList: list, inputSets: list) -> np.ndarray:
         retMat[i] = setOfWords2Vec(vocabList, wordsSet)
         i += 1
     return retMat
-
+'''
 listOPosts, listClasses = loadDataSet()
 vocabList = createVocabList(listOPosts)
 print(vocabList)
@@ -49,7 +49,46 @@ vec = setOfWords2Vec(vocabList, listOPosts[0])
 print(vec)
 trainMat = words2Mat(vocabList, listOPosts)
 print(trainMat.shape)
-p1V, p0V, pAb = Bayes.trainNB0(trainMat, np.array(listClasses))
+p0V, p1V, pAb = Bayes.trainNB(trainMat, np.array(listClasses))
 print('p1V', p1V)
 print('p0V', p0V)
 print('pAb', pAb)
+'''
+
+def testingNB():
+    listPosts, listClasses = loadDataSet()
+    vocabList = createVocabList(listOPosts)
+    trainMat = words2Mat(vocabList, listOPosts)
+    p0V, p1V, pAb = Bayes.trainNB(trainMat, np.array(listClasses))
+    testEntry = ['love', 'my', 'dalmation']
+    thisDoc = setOfWords2Vec(vocabList, testEntry)
+    print(testEntry, 'classified as: ', Bayes.classifyNB(thisDoc, p0V, p1V, pAb))
+    testEntry = ['stupid', 'my', 'garbage']
+    thisDoc = setOfWords2Vec(vocabList, testEntry)
+    print(testEntry, 'classified as: ', Bayes.classifyNB(thisDoc, p0V, p1V, pAb))
+    
+testingNB()
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
