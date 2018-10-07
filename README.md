@@ -28,3 +28,7 @@ python codes with numpy -- Machine Learning in Action
 #### 4.4 Document classification with naïve Bayes 
 
 #### 4.5 Classifying text with Python 
+
+#### 4.6 Example: classifying spam email with naïve Bayes 
+
+#### 4.7 Example: using naïve Bayes to reveal local attitudes from personal ads
