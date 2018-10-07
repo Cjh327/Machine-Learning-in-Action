@@ -31,4 +31,10 @@ python codes with numpy -- Machine Learning in Action
 
 #### 4.6 Example: classifying spam email with naïve Bayes 
 
-#### 4.7 Example: using naïve Bayes to reveal local attitudes from personal ads
+### Chapter 5: Logistic regression 
+
+#### 5.1 Classification with logistic regression and the sigmoid function: a tractable step function 
+
+#### 5.2 Using optimization to find the best regression coefficients 
+
+#### 5.3 Example: estimating horse fatalities from colic 

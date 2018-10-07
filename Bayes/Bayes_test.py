@@ -48,25 +48,3 @@ def testingNB():
 #testingNB()
     
 Bayes.spamTest()
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
