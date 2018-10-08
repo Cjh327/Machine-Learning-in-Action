@@ -38,3 +38,11 @@ python codes with numpy -- Machine Learning in Action
 #### 5.2 Using optimization to find the best regression coefficients 
 
 #### 5.3 Example: estimating horse fatalities from colic 
+
+### Chapter 6: Support vector machines 
+
+#### 6.1 Separating data with the maximum margin
+
+#### 6.2 Finding the maximum margin 
+
+#### 6.3 Efficient optimization with the SMO algorithm 
