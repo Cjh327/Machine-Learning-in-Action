@@ -8,7 +8,7 @@ Created on Wed Oct 10 20:22:09 2018
 import numpy as np
 from math import *
 
-def loadDataSet() -> [np.ndarray, np.ndarray]:
+def loadDataSet() -> (np.ndarray, np.ndarray):
     dataMat = np.array([[1, 2.1],
                         [2, 1.1],
                         [1.3, 1],
@@ -16,6 +16,20 @@ def loadDataSet() -> [np.ndarray, np.ndarray]:
                         [2, 1]])
     labelMat = np.array([[1],[1],[-1],[-1],[1]])
     return dataMat, labelMat
+
+def loadFileDataSet(filename: str) -> (np.ndarray, np.ndarray):
+    numFeat = len(open(filename).readline().split('\t'))
+    fr = open(filename)
+    dataMat = []
+    labelMat = []
+    for line in fr.readlines():
+        lineArr = []
+        curLine = line.strip().split('\t')
+        for i in range(numFeat - 1):
+            lineArr.append(float(curLine[i]))
+            dataMat.append(lineArr)
+            labelMat.append(float(curLine[-1]))
+    return np.array(dataMat), np.array(labelMat).reshape((len(labelMat), 1))
 
 def stumpClassify(dataMat: np.ndarray, dimen: int, threshVal: float, threshIneq: str) -> np.ndarray:
     '''
@@ -67,7 +81,7 @@ def buildStump(dataMat: np.ndarray, labelMat: np.ndarray, D: np.ndarray):
                     bestStump['ineq'] = inequal
     return bestStump, minErr, bestClassEst
     
-def adaBoostTrainDS(dataMat: np.ndarray, labelMat: np.ndarray, numIter: int=40):
+def adaBoostTrainDS(dataMat: np.ndarray, labelMat: np.ndarray, numIter: int=40) -> list:
     '''
     Function: AdaBoost算法（DS: decision stump 单层决策树，AdaBoost中较为流行的弱分类器）
     dataMat:    m * n
@@ -97,6 +111,27 @@ def adaBoostTrainDS(dataMat: np.ndarray, labelMat: np.ndarray, numIter: int=40):
             break
     return weakClassArr
 
+def adaClassify(testDataMat: np.ndarray, classifierArr: list, testLabelMat: np.ndarray) -> np.ndarray:
+    '''
+    Function: 利用训练出的多个弱分类器进行分类
+    testDataMat:    m * n   待分类数据集
+    testLabelMat:   m * 1
+    '''
+    m, n = testDataMat.shape
+    aggClassEst = np.zeros((m, 1))
+    assert testLabelMat.shape == (m, 1)
+    for i in range(len(classifierArr)):
+        classEst = stumpClassify(testDataMat, classifierArr[i]['dim'], classifierArr[i]['thresh'], \
+                                 classifierArr[i]['ineq'])
+        aggClassEst += classifierArr[i]['alpha'] * classEst
+        print(aggClassEst)
+    prediction = np.sign(aggClassEst)
+    assert prediction.shape == (m, 1)
+    errArr = np.ones((m, 1))
+    errCnt = np.sum(errArr[prediction != testLabelMat])
+    errRate = errCnt / m
+    return errRate
+    
     
     
     

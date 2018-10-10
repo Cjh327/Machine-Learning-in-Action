@@ -60,3 +60,5 @@ python codes with numpy -- Machine Learning in Action
 #### 7.5 Test: classifying with AdaBoost 
 
 #### 7.6 Example: AdaBoost on a difficult dataset 
+
+#### 7.7 Classification imbalance 
