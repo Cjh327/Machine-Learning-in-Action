@@ -46,3 +46,17 @@ python codes with numpy -- Machine Learning in Action
 #### 6.2 Finding the maximum margin 
 
 #### 6.3 Efficient optimization with the SMO algorithm 
+
+### Chapter 7 Improving classification with the AdaBoost meta-algorithm 
+
+#### 7.1 Classifiers using multiple samples of the dataset 
+
+#### 7.2 Train: improving the classifier by focusing on errors 
+
+#### 7.3 Creating a weak learner with a decision stump 
+
+#### 7.4 Implementing the full AdaBoost algorithm 
+
+#### 7.5 Test: classifying with AdaBoost 
+
+#### 7.6 Example: AdaBoost on a difficult dataset 
